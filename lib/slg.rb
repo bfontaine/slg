@@ -6,12 +6,15 @@ require "nokogiri"
 
 require "ud/formatting"
 
+# Most of this code is copy/pasted from UD.
+# TODO generalize the code in UD and reuse it here.
+
 # This module provide some methods to scrape definitions from Slengo.it.
 module Slg
   class << self
     # @return [String] the current gem's version
     def version
-      "0.1.0"
+      "0.0.1"
     end
 
     WWW_ROOT = "https://slengo.it"
@@ -21,7 +24,8 @@ module Slg
     #                      are allowed.
     # @return [String]
     def search_url(term)
-      "#{WWW_ROOT}/define/#{URI.encode_www_form_component(term)}"
+      param = URI.encode_www_form_component(term).gsub(/\+/, "%20")
+      "#{WWW_ROOT}/define/#{param}"
     end
 
     # Open the search URL in the user's browser
@@ -59,16 +63,22 @@ module Slg
 
         header_p = elt.css("header p").first
 
+        definition = elt.css("div.word-definition").text
+        # Remove 'see also'
+        definition.gsub! /\bCfr\..+/m, ""
+        definition.strip!
+
         {
           # There's no :id nor :author
           # For some reason the selector 'h1.word-title' work in JS in the
           # browser but not with Nokogiri.
           :word => header_p.text.strip,
           :permalink => url,
-          :definition => elt.css("div.word-definition").text.strip,
+          :definition => definition,
           :example => example,
           :upvotes => upvotes,
           :downvotes => downvotes,
+          # TODO add region as well
         }
 
       end.take opts[:count]
