@@ -86,7 +86,7 @@ module Slg
 
     # Format results for output
     # @param results [Array] this must be an array of results, as returned by
-    #                        +UD.query+.
+    #                        +Slg.query+.
     # @param color [Boolean] colored output
     # @return [String]
     def format_results(results, color = true)
