@@ -1,0 +1,39 @@
+#! /usr/bin/env ruby
+# -*- coding: UTF-8 -*-
+
+# clean interrupt
+trap("INT") { abort }
+
+require "optimist"
+require "slg"
+
+opts = Optimist.options do
+  version "slg #{Slg.version}"
+  banner <<-EOS
+Slg is a command-line tool to scrape definitions from Slengo.it.
+
+Usage:
+    slg [options] <word(s)>
+where [options] are:
+EOS
+
+  opt :count, "Limit the number of definitions", :type => :int, :default => 1, :short => "-n"
+  opt :color, "Use colorized output", :default => true
+  opt :browser, "Open the results in a browser window", :short => "-b"
+end
+
+Optimist.die :count, "must be non-negative" if opts[:count] < 0
+
+if ARGV.empty?
+  puts "Error: No word provided. Use -h or --help to see the help."
+  exit 1
+end
+
+term = ARGV.join " "
+
+if opts[:browser]
+  Slg.open_url(term)
+else
+  q = Slg.query(ARGV.join(" "), opts)
+  puts Slg.format_results(q, opts[:color])
+end

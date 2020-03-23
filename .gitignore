@@ -1,0 +1,8 @@
+*~
+.*.sw*
+*.gem
+/coverage
+/.yardoc
+/doc
+/vendor
+.bundle
