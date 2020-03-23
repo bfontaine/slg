@@ -1,13 +1,16 @@
 # slg
 
-[![Gem Version](https://img.shields.io/gem/v/slg.png)](http://badge.fury.io/rb/slg)
+[![Gem Version](https://img.shields.io/gem/v/slg.png)](https://rubygems.org/gems/slg)
+<!--
 [![Coverage Status](https://img.shields.io/coveralls/bfontaine/slg.svg)](https://coveralls.io/r/bfontaine/slg)
+-->
 [![Inline docs](http://inch-ci.org/github/bfontaine/slg.svg)](http://inch-ci.org/github/bfontaine/slg)
 
 **slg** is a command-line tool for [Slengo][], the Italian Urban Dictionary.
 
 See [ud][] for the English equivalent.
 
+[ud]: https://github.com/bfontaine/ud
 [Slengo]: https://slengo.it/define/catramina
 
 ## Example
