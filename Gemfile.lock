@@ -63,7 +63,7 @@ DEPENDENCIES
   colored (~> 1.2)
   coveralls (~> 0.8)
   inch (~> 0.8)
-  nokogiri (~> 1.6)
+  nokogiri (~> 1.10)
   optimist (~> 3.0)
   rake
   simplecov
