@@ -10,8 +10,8 @@ BASE_URL = 'https://slengo.it/define'
 WebMock.enable!
 WebMock.disable_net_connect!(allow: %r[^https?://coveralls\.io])
 
-Dir["#{RESPONSES_DIR}/*.html"].each do |f|
-  next if f !~ /\/(\w+)\.html$/
+Dir["#{RESPONSES_DIR}/*.html.resp"].each do |f|
+  next if f !~ /\/(\w+)\.html.resp$/
   term = $1
   puts "registering fake response for #{term}",
   WebMock.stub_request(
