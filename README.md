@@ -48,5 +48,5 @@ In a Ruby script:
 ```ruby
 require "slg"
 
-defs = Slg.query("wtf")
+defs = Slg.query("culo")
 ```
