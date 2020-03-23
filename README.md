@@ -12,7 +12,13 @@ See [ud][] for the English equivalent.
 
 ## Example
 
-TODO
+    $ slg zisca
+    * zisca (100/0):
+
+        Sigaretta.
+
+    Example:
+        Oh, amo' che mi alzi una zisca?
 
 ## Install
 
