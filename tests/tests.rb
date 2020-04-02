@@ -23,30 +23,9 @@ for t in Dir.glob( File.join( test_dir,  '*_tests.rb' ) )
 end
 
 class SlgTests < Test::Unit::TestCase
-
   def test_slg_version
     assert(Slg.version =~ /^\d+\.\d+\.\d+/)
   end
-
-  def test_slg_open_cmd
-    os = RbConfig::CONFIG["host_os"]
-
-    RbConfig::CONFIG["host_os"] = "darwin"
-    assert_equal "open", Slg.send(:open_cmd)
-
-    RbConfig::CONFIG["host_os"] = "linux"
-    assert_equal "xdg-open", Slg.send(:open_cmd)
-
-    RbConfig::CONFIG["host_os"] = "bsd"
-    assert_equal "xdg-open", Slg.send(:open_cmd)
-
-    RbConfig::CONFIG["host_os"] = "cygwin"
-    assert_equal "start", Slg.send(:open_cmd)
-
-  ensure
-    RbConfig::CONFIG["host_os"] = os
-  end
-
 end
 
 

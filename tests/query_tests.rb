@@ -8,18 +8,16 @@ class Slg_Query_test < Test::Unit::TestCase
     @foo, @bar = [
       {
         :definition=>"Foo foo.",
-        :downvotes=>0,
-        :example=> "foo ex 1\n\nfoo ex 2",
+        :ratio=>1.0,
+        :examples=> ["foo ex 1", "foo ex 2"],
         :permalink=>"https://slengo.it/define/culo",
-        :upvotes=>100,
         :word=>"foo",
       },
       {
         :definition=>"Bar bar.",
-        :downvotes=>10,
-        :example=>"bar ex",
+        :ratio=>0.9,
+        :examples=>["bar ex"],
         :permalink=>"https://slengo.it/define/culo",
-        :upvotes=>90,
         :word=>"foo",
       }
     ]

@@ -2,9 +2,7 @@ source "https://rubygems.org"
 
 gem "coveralls", "~> 0.8", :require => false
 
-gem "optimist", "~> 3.0"
-gem "colored", "~> 1.2"
-gem "ud", "~> 0.3"
+gem "defcli", ">= 0"
 gem "nokogiri", "~> 1.10"
 
 group :test do

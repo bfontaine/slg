@@ -1,13 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 require "uri"
-require "open-uri"
 require "nokogiri"
 
-require "ud/formatting"
-
-# Most of this code is copy/pasted from UD.
-# TODO generalize the code in UD and reuse it here.
+require "defcli"
 
 # This module provide some methods to scrape definitions from Slengo.it.
 module Slg
@@ -33,7 +29,7 @@ module Slg
     #                      are allowed.
     # @return [Nil]
     def open_url(term)
-      system open_cmd, search_url(term)
+      Defcli.open_in_browser search_url(term)
     end
 
     # Query the website and return a list of definitions for the provided term.
@@ -44,7 +40,7 @@ module Slg
     # @return [Array<Hash>]
     def query(term, opts = {})
       url = search_url(term)
-      text = OpenURI.open_uri url
+      text = Defcli.read_url url
 
       opts = { :count => 1 }.merge(opts || {})
 
@@ -53,19 +49,19 @@ module Slg
       doc = Nokogiri::HTML.parse text
 
       doc.css("article.definition-card").map do |elt|
-        examples = elt.css(".word-examples li").map(&:text).map(&:strip)
-        example = examples.join "\n\n"
+        examples = elt.css(".word-examples li").map do |ex|
+          ex.text.strip
+        end
 
         votes = elt.css(".votes-container .v-progress-linear")
         # Slengo.it uses percentages instead of number of votes
-        upvotes = votes.attr("aria-valuenow").to_s.to_i
-        downvotes = 100 - upvotes
+        ratio = votes.attr("aria-valuenow").to_s.to_f / 100.0
 
         header_p = elt.css("header p").first
 
         definition = elt.css("div.word-definition").text
         # Remove 'see also'
-        definition.gsub! /\bCfr\..+/m, ""
+        definition.gsub!(/\bCfr\..+/m, "")
         definition.strip!
 
         {
@@ -75,9 +71,8 @@ module Slg
           :word => header_p.text.strip,
           :permalink => url,
           :definition => definition,
-          :example => example,
-          :upvotes => upvotes,
-          :downvotes => downvotes,
+          :examples => examples,
+          :ratio => ratio,
           # TODO add region as well
         }
 
@@ -90,18 +85,7 @@ module Slg
     # @param color [Boolean] colored output
     # @return [String]
     def format_results(results, color = true)
-      UD::Formatting.text(results, color)
-    end
-
-    def open_cmd
-      case RbConfig::CONFIG["host_os"]
-      when /darwin/
-        "open"
-      when /bsd|linux/
-        "xdg-open"
-      when /cygwin|mingw|mswin/
-        "start"
-      end
+      Defcli.format_results(results, color)
     end
   end
 end

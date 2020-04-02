@@ -19,9 +19,7 @@ Gem::Specification.new do |s|
 
   s.executables << "slg"
 
-  s.add_runtime_dependency "optimist", "~> 3.0"
-  s.add_runtime_dependency "colored", "~> 1.2"
-  s.add_runtime_dependency "ud", "~> 0.3"
+  s.add_runtime_dependency "defcli", "~> 0.0"
   s.add_runtime_dependency "nokogiri", "~> 1.10"
 
   s.add_development_dependency "simplecov", "~> 0.18"
