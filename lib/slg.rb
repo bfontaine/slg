@@ -10,7 +10,7 @@ module Slg
   class << self
     # @return [String] the current gem's version
     def version
-      "0.0.1"
+      "0.0.2"
     end
 
     WWW_ROOT = "https://slengo.it"
